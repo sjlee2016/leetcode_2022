@@ -20,7 +20,8 @@ class Solution:
         ans = 0
         for i in range(len(matrix)) :
             for j in range(len(matrix[0])) :
-                ans = max(ans,dfs(i,j))
+                if dp[i][j] == 0 :
+                    ans = max(ans,dfs(i,j))
         return ans
         
         
