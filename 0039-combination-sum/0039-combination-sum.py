@@ -6,8 +6,9 @@ class Solution:
         output = []
         def check(index,path,s) :
             if s == target :
-                if sorted(list(path)) not in output :
-                    output.append(sorted(list(path)))
+                m = sorted(list(path))
+                if m not in output :
+                    output.append(m)
                     return 
             if s > target :
                 return 
