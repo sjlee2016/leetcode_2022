@@ -23,18 +23,22 @@ class Solution(object):
         :type bottomLeft: Point
         :rtype: integer
         """
-        if bottomLeft.x > topRight.x or bottomLeft.y > topRight.y :
-            return 0 
+        tx, ty = topRight.x, topRight.y
+        bx, by = bottomLeft.x, bottomLeft.y
+        
+        if tx < bx or ty < by :
+            return 0
         if sea.hasShips(topRight,bottomLeft) == False :
             return 0
-        if bottomLeft.x == topRight.x and topRight.x == bottomLeft.x :
+        if tx == bx and ty == by :
             return 1 
+        midx = (tx+bx)//2
+        midy = (ty+by)//2
+        ## else.. find by divide and conquer 
+        W1 = self.countShips(sea,Point(midx,midy),bottomLeft) ## correct
+        W2 = self.countShips(sea,Point(midx,ty), Point(bx,midy+1))
+        W3 = self.countShips(sea,Point(tx,midy), Point(midx+1,by))
+        W4 = self.countShips(sea,topRight, Point(midx+1,midy+1)) ## correct
+        return W1+W2+W3+W4
+    
         
-        bx = bottomLeft.x 
-        by = bottomLeft.y 
-        tx = topRight.x 
-        ty = topRight.y 
-        midX = (bx+tx)//2
-        midY = (by+ty)//2 
-        
-        return self.countShips(sea,Point(midX,midY), bottomLeft) + self.countShips(sea,Point(midX,ty), Point(bx,midY+1)) + self.countShips(sea,Point(tx,midY), Point(midX+1,by)) + self.countShips(sea, topRight, Point(midX+1, midY+1))
