@@ -17,7 +17,7 @@ class Solution(object):
             if s > target :
                 return 
             
-            for i in range(len(candidates)) :
+            for i in range(index,len(candidates)) :
                 path.append(candidates[i])
                 check(i,path,s+candidates[i])
                 path.pop()
