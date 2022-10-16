@@ -15,8 +15,7 @@ class RandomizedSet:
         if val not in self.key :
             return False
         last_element, index = self.key[-1] , self.map[val]
-        self.key[-1], self.key[index] = self.key[index] , self.key[-1]
-        self.map[last_element] = index
+        self.map[last_element], self.key[index] = index , self.key[-1]
         self.key.pop()
         del self.map[val]
         return True
