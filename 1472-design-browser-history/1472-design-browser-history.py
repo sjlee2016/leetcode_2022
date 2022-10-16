@@ -1,29 +1,43 @@
-class ListNode:
-    def __init__(self, url, prev_node= None, next_node=None):
+class Page :
+    def __init__(self, url, prev=None) :
         self.url = url
-        self.prev_node = prev_node
-        self.next_node = next_node
-
+        self.next = None 
+        self.prev = prev 
+        
 class BrowserHistory:
+
     def __init__(self, homepage: str):
-        self.head = self.current_node = ListNode(homepage)
+        self.homePage = Page(homepage,None) 
+        self.currentPage = self.homePage  
 
     def visit(self, url: str) -> None:
-        self.current_node.next_node = ListNode(url, prev_node=self.current_node)
-        self.current_node = self.current_node.next_node
+        newPage = Page(url, self.currentPage)
+        self.currentPage.next = newPage 
+        newPage.prev = self.currentPage
+        self.currentPage = newPage 
 
     def back(self, steps: int) -> str:
-        for _ in range(steps):
-            if self.current_node.prev_node is not None:
-                self.current_node = self.current_node.prev_node
-            else:
-                return self.current_node.url
-        return self.current_node.url
+        
+        for _ in range(steps) :
+            if self.currentPage.prev is None :
+                return self.currentPage.url
+            else :
+                self.currentPage = self.currentPage.prev 
+        return self.currentPage.url
 
     def forward(self, steps: int) -> str:
-        for _ in range(steps):
-            if self.current_node.next_node is not None:
-                self.current_node = self.current_node.next_node
-            else:
-                return self.current_node.url
-        return self.current_node.url
+        
+
+        for _ in range(steps) :
+            if self.currentPage.next is None :
+                return self.currentPage.url
+            else :
+                self.currentPage = self.currentPage.next 
+                
+        return self.currentPage.url
+
+# Your BrowserHistory object will be instantiated and called as such:
+# obj = BrowserHistory(homepage)
+# obj.visit(url)
+# param_2 = obj.back(steps)
+# param_3 = obj.forward(steps)
