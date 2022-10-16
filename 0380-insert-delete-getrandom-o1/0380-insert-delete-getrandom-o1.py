@@ -2,26 +2,27 @@ from random import choice
 class RandomizedSet:
 
     def __init__(self):
-        self.set = {}
-        self.keys = []
+        self.map = {}
+        self.key = [] 
+
     def insert(self, val: int) -> bool:
-        if val in self.set :
+        if val in self.key :
             return False
-        self.set[val] = len(self.keys)
-        self.keys.append(val)
-        return True 
+        self.map[val] = len(self.key)
+        self.key.append(val)
+        return True
     def remove(self, val: int) -> bool:
-        if val not in self.set :
-            return False 
-        else :
-            last_element, idx = self.keys[-1], self.set[val]
-            self.keys[idx], self.set[last_element] = last_element, idx
-            self.keys.pop()
-            del self.set[val]
-            return True
+        if val not in self.key :
+            return False
+        last_element, index = self.key[-1] , self.map[val]
+        self.key[-1], self.key[index] = self.key[index] , self.key[-1]
+        self.map[last_element] = index
+        self.key.pop()
+        del self.map[val]
+        return True
 
     def getRandom(self) -> int:
-        return choice(self.keys)
+        return choice(self.key)
 
 
 # Your RandomizedSet object will be instantiated and called as such:
