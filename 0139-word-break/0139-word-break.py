@@ -5,14 +5,14 @@ class Solution(object):
         :type wordDict: List[str]
         :rtype: bool
         """
-        wordSet = set(wordDict)
-        
-        dp = [False] * (len(s) + 1) 
+        dp = [ False ] * (len(s) + 1)
         dp[0] = True
-        
-        for i in range(1, len(s) + 1 ) :
+        wordSet = set(wordDict)
+        for i in range(len(s)+1) :
             for j in range(i) :
-                if dp[j] and s[j:i] in wordSet :
-                    dp[i] = True
+                currentString = s[j:i]
+                if dp[j] == True and currentString in wordSet :
+                    dp[i]  = True
                     break
+                    
         return dp[len(s)]
