@@ -1,19 +1,41 @@
-from sortedcontainers import SortedSet
-
-class Leaderboard:
+class Leaderboard(object):
 
     def __init__(self):
         self.scores = defaultdict(int)
-        self.set = SortedSet()
 
-    def addScore(self, playerId: int, score: int) -> None:
-        self.set.discard((self.scores[playerId], playerId))
+    def addScore(self, playerId, score):
+        """
+        :type playerId: int
+        :type score: int
+        :rtype: None
+        """
         self.scores[playerId] += score
-        self.set.add((self.scores[playerId], playerId))
 
-    def top(self, K: int) -> int:
-        return sum( score for score, _ in islice(reversed(self.set), 0, K) )
+    def top(self, K):
+        """
+        :type K: int
+        :rtype: int
+        """
+        heap = []
+        
+        for key in self.scores :
+            value = self.scores[key]
+            heapq.heappush(heap,(value,key))
+            if len(heap) > K :
+                heapq.heappop(heap)
+                
+        return sum(x[0] for x in heap)
 
-    def reset(self, playerId: int) -> None:
-        self.set.remove((self.scores[playerId], playerId))
-        del self.scores[playerId]
+    def reset(self, playerId):
+        """
+        :type playerId: int
+        :rtype: None
+        """
+        self.scores[playerId] = 0
+
+
+# Your Leaderboard object will be instantiated and called as such:
+# obj = Leaderboard()
+# obj.addScore(playerId,score)
+# param_2 = obj.top(K)
+# obj.reset(playerId)
