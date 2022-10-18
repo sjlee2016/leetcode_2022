@@ -1,18 +1,16 @@
 class Solution:
     def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
+        paths = []
         
-        result = []
-        target = len(graph)-1 
-        
-      
-        def dfs(start,path) :
-            if start == target :
-                result.append(list(path))
-                return 
-            for adj in graph[start] :
-                path.append(adj)
-                dfs(adj,path)
-                path.pop()
+        def backtrack(index,graph,path) :
+            if index == len(graph)-1 :
+                paths.append(list(path))
+                return
             
-        dfs(0,[0])
-        return result
+            for adj in graph[index] :
+                if adj not in path :
+                    path.append(adj)
+                    backtrack(adj,graph,path)
+                    path.pop()
+        backtrack(0,graph,[0])
+        return paths
