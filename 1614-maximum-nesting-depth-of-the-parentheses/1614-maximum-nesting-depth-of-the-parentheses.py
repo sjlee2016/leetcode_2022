@@ -1,18 +1,11 @@
-class Solution(object):
-    def maxDepth(self, s):
-        """
-        :type s: str
-        :rtype: int
-        """
-        leftBracket = 0
-        maxBracket = 0
+class Solution:
+    def maxDepth(self, s: str) -> int:
+        left = 0
+        ans = 0
         for i in range(len(s)) :
             if s[i] == "(" :
-                leftBracket+=1
-                maxBracket = max(maxBracket , leftBracket)
+                left += 1 
+                ans = max(ans,left)
             elif s[i] == ")" :
-                leftBracket-=1
-                
-        if maxBracket == float('-inf') :
-            return 0
-        return maxBracket
+                left-=1
+        return ans
